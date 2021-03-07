@@ -5,7 +5,7 @@ using System;
 
 namespace NUnitWindowsDesktopTestProject
 {
-    public class GlobalProtectTest
+    public class GlobalProtectRPA
     {
         private WindowsDriver<WindowsElement> _driver;
 
@@ -20,8 +20,18 @@ namespace NUnitWindowsDesktopTestProject
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
+        [TearDown]
+        public void TestCleanup()
+        {
+            if (_driver != null)
+            {
+                _driver.Quit();
+                _driver = null;
+            }
+        }
+
         [Test]
-        public void Test1()
+        public void ConnectWithGlobalProtect()
         {
             var notConnectedElement = _driver.FindElementByName("Not Connected");
             if (notConnectedElement != null)
