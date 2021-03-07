@@ -2,6 +2,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.Configuration;
 
 namespace NUnitWindowsDesktopTestProject
 {
@@ -13,10 +14,10 @@ namespace NUnitWindowsDesktopTestProject
         public void Setup()
         {
             var options = new AppiumOptions();
-            options.AddAdditionalCapability("app", @"C:\Program Files\Palo Alto Networks\GlobalProtect\PanGPA.exe");
+            options.AddAdditionalCapability("app", ConfigurationManager.AppSettings["ExeFilePath"]);
             options.AddAdditionalCapability("deviceName", "WindowsPC");
-            _driver = new WindowsDriver<WindowsElement>(new Uri("http://127.0.0.1:4723"), options);
 
+            _driver = new WindowsDriver<WindowsElement>(new Uri(ConfigurationManager.AppSettings["WindowsAppDriverURI"]), options);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
